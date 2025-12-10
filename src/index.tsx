@@ -311,17 +311,13 @@ app.get('/overlay', (c) => {
             left: 50%;
             transform: translateX(-50%);
             display: flex;
-            gap: 10px;
+            gap: 15px;
             width: 95%;
             justify-content: center;
           }
           
           .player-card {
-            background: linear-gradient(135deg, rgba(30,30,40,0.95), rgba(20,20,30,0.95));
-            border: 2px solid rgba(255,255,255,0.1);
-            border-radius: 12px;
-            padding: 10px;
-            width: 120px;
+            background: transparent;
             text-align: center;
             transition: all 0.5s ease;
             position: relative;
@@ -333,56 +329,92 @@ app.get('/overlay', (c) => {
             filter: grayscale(100%);
           }
           
-          .player-card img {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            border: 3px solid rgba(255,255,255,0.2);
+          .player-photo-container {
+            position: relative;
+            width: 120px;
+            height: 160px;
             margin-bottom: 8px;
+          }
+          
+          .player-card img {
+            width: 120px;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 8px;
             transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
           }
           
           .player-card.eliminated img {
-            border-color: rgba(255,0,0,0.5);
+            box-shadow: 0 4px 8px rgba(255,0,0,0.5);
           }
           
           .player-nickname {
             color: #fff;
-            font-size: 14px;
+            font-size: 16px;
             font-weight: bold;
-            margin-bottom: 5px;
-          }
-          
-          .player-role {
-            color: #ffd700;
-            font-size: 12px;
-            padding: 3px 8px;
-            background: rgba(255,215,0,0.2);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.6);
+            padding: 5px 10px;
             border-radius: 5px;
-            display: inline-block;
-            margin-bottom: 5px;
-          }
-          
-          .player-status {
-            color: #ff4444;
-            font-size: 11px;
-            font-style: italic;
           }
           
           .player-position {
             position: absolute;
-            top: 5px;
-            left: 5px;
-            background: rgba(255,255,255,0.2);
+            top: 8px;
+            left: 8px;
+            background: rgba(0,0,0,0.7);
             color: #fff;
-            width: 24px;
-            height: 24px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 12px;
+            font-size: 16px;
             font-weight: bold;
+            border: 2px solid rgba(255,255,255,0.5);
+            z-index: 10;
+          }
+          
+          .player-role-icon {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(0,0,0,0.7);
+            color: #fff;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            border: 2px solid;
+            z-index: 10;
+          }
+          
+          .player-role-icon.don {
+            border-color: #8b0000;
+            background: rgba(139,0,0,0.8);
+          }
+          
+          .player-role-icon.mafia {
+            border-color: #dc143c;
+            background: rgba(220,20,60,0.8);
+          }
+          
+          .player-role-icon.sheriff {
+            border-color: #4169e1;
+            background: rgba(65,105,225,0.8);
+          }
+          
+          .player-status {
+            color: #ff4444;
+            font-size: 12px;
+            font-style: italic;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+            margin-top: 3px;
           }
           
           /* История событий (верхний левый угол) */
@@ -495,15 +527,28 @@ app.get('/overlay', (c) => {
               \`Игра #\${currentGameData.game.game_number}\`;
             
             // Обновляем карточки игроков
-            const playersHTML = currentGameData.players.map(player => \`
-              <div class="player-card \${player.status !== 'in_game' ? 'eliminated' : ''}" data-player-id="\${player.player_id}">
-                <div class="player-position">\${player.position}</div>
-                <img src="\${player.photo_url || 'https://i.pravatar.cc/150'}" alt="\${player.nickname}">
-                <div class="player-nickname">\${player.nickname}</div>
-                \${player.role ? \`<div class="player-role">\${player.role}</div>\` : ''}
-                \${player.status !== 'in_game' ? \`<div class="player-status">\${getStatusText(player.exit_type)}</div>\` : ''}
-              </div>
-            \`).join('');
+            const playersHTML = currentGameData.players.map(player => {
+              let roleIcon = '';
+              if (player.role === 'Дон') {
+                roleIcon = '<div class="player-role-icon don">👑</div>';
+              } else if (player.role === 'Мафия') {
+                roleIcon = '<div class="player-role-icon mafia">🔫</div>';
+              } else if (player.role === 'Шериф') {
+                roleIcon = '<div class="player-role-icon sheriff">👮</div>';
+              }
+              
+              return \`
+                <div class="player-card \${player.status !== 'in_game' ? 'eliminated' : ''}" data-player-id="\${player.player_id}">
+                  <div class="player-photo-container">
+                    <div class="player-position">\${player.position}</div>
+                    \${roleIcon}
+                    <img src="\${player.photo_url || 'https://i.pravatar.cc/120?img=' + player.position}" alt="\${player.nickname}">
+                  </div>
+                  <div class="player-nickname">\${player.nickname}</div>
+                  \${player.status !== 'in_game' ? \`<div class="player-status">\${getStatusText(player.exit_type)}</div>\` : ''}
+                </div>
+              \`;
+            }).join('');
             
             document.getElementById('playersContainer').innerHTML = playersHTML;
             
@@ -854,13 +899,29 @@ app.get('/admin', (c) => {
           
           // Отменить последнее действие
           async function undoLastEvent() {
+            if (!currentGame) {
+              alert('Нет активной игры');
+              return;
+            }
+            
             if (!confirm('Отменить последнее действие?')) return;
             
-            await fetch(\`/api/games/\${currentGame.game.id}/events/last\`, {
-              method: 'DELETE'
-            });
-            
-            loadCurrentGame();
+            try {
+              const response = await fetch(\`/api/games/\${currentGame.game.id}/events/last\`, {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' }
+              });
+              
+              if (response.ok) {
+                alert('Последнее действие отменено');
+                loadCurrentGame();
+              } else {
+                alert('Ошибка при отмене действия');
+              }
+            } catch (error) {
+              console.error('Error undoing event:', error);
+              alert('Ошибка при отмене действия');
+            }
           }
           
           // Добавить игрока
