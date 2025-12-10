@@ -311,19 +311,20 @@ app.get('/overlay', (c) => {
             left: 0;
             right: 0;
             display: flex;
-            gap: 0;
+            gap: 10px;
             width: 100%;
-            justify-content: space-between;
+            justify-content: center;
             padding: 0 20px;
             box-sizing: border-box;
           }
           
           .player-card {
             background: transparent;
-            width: 120px;
+            width: 175px;
             text-align: center;
             transition: all 0.5s ease;
             position: relative;
+            flex-shrink: 0;
           }
           
           .player-card.eliminated {
@@ -333,8 +334,8 @@ app.get('/overlay', (c) => {
           }
           
           .player-card img {
-            width: 120px;
-            height: 160px;
+            width: 175px;
+            height: 233px;
             object-fit: cover;
             border-radius: 8px;
             margin-bottom: 0;
@@ -348,7 +349,7 @@ app.get('/overlay', (c) => {
           
           .player-nickname {
             color: #fff;
-            font-size: 16px;
+            font-size: 20px;
             font-weight: bold;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
             position: absolute;
@@ -356,23 +357,23 @@ app.get('/overlay', (c) => {
             left: 0;
             right: 0;
             background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
-            padding: 8px 5px;
+            padding: 10px 8px;
             border-radius: 0 0 8px 8px;
           }
           
           .player-position {
             position: absolute;
-            top: 8px;
-            left: 8px;
+            top: 10px;
+            left: 10px;
             background: rgba(0,0,0,0.7);
             color: #fff;
-            width: 28px;
-            height: 28px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 14px;
+            font-size: 20px;
             font-weight: bold;
             border: 2px solid rgba(255,255,255,0.5);
             z-index: 10;
@@ -380,17 +381,17 @@ app.get('/overlay', (c) => {
           
           .player-role-icon {
             position: absolute;
-            top: 8px;
-            right: 8px;
+            top: 10px;
+            right: 10px;
             background: rgba(0,0,0,0.7);
             color: #fff;
-            width: 28px;
-            height: 28px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 16px;
+            font-size: 22px;
             border: 2px solid rgba(255,255,255,0.5);
             z-index: 10;
           }
@@ -416,11 +417,11 @@ app.get('/overlay', (c) => {
             left: 50%;
             transform: translate(-50%, -50%);
             color: #ff4444;
-            font-size: 18px;
+            font-size: 22px;
             font-weight: bold;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.9);
             background: rgba(0,0,0,0.7);
-            padding: 5px 10px;
+            padding: 8px 15px;
             border-radius: 5px;
             z-index: 5;
           }
