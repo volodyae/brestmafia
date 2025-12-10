@@ -318,6 +318,7 @@ app.get('/overlay', (c) => {
           
           .player-card {
             background: transparent;
+            width: 120px;
             text-align: center;
             transition: all 0.5s ease;
             position: relative;
@@ -329,24 +330,18 @@ app.get('/overlay', (c) => {
             filter: grayscale(100%);
           }
           
-          .player-photo-container {
-            position: relative;
-            width: 120px;
-            height: 160px;
-            margin-bottom: 8px;
-          }
-          
           .player-card img {
             width: 120px;
             height: 160px;
             object-fit: cover;
             border-radius: 8px;
+            margin-bottom: 0;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            display: block;
           }
           
           .player-card.eliminated img {
-            box-shadow: 0 4px 8px rgba(255,0,0,0.5);
+            opacity: 0.5;
           }
           
           .player-nickname {
@@ -354,9 +349,13 @@ app.get('/overlay', (c) => {
             font-size: 16px;
             font-weight: bold;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
-            background: rgba(0,0,0,0.6);
-            padding: 5px 10px;
-            border-radius: 5px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            padding: 8px 5px;
+            border-radius: 0 0 8px 8px;
           }
           
           .player-position {
@@ -365,13 +364,13 @@ app.get('/overlay', (c) => {
             left: 8px;
             background: rgba(0,0,0,0.7);
             color: #fff;
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: bold;
             border: 2px solid rgba(255,255,255,0.5);
             z-index: 10;
@@ -383,38 +382,45 @@ app.get('/overlay', (c) => {
             right: 8px;
             background: rgba(0,0,0,0.7);
             color: #fff;
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
-            border: 2px solid;
+            font-size: 16px;
+            border: 2px solid rgba(255,255,255,0.5);
             z-index: 10;
           }
           
           .player-role-icon.don {
-            border-color: #8b0000;
-            background: rgba(139,0,0,0.8);
+            background: rgba(139,0,0,0.9);
+            border-color: #ff0000;
           }
           
           .player-role-icon.mafia {
-            border-color: #dc143c;
-            background: rgba(220,20,60,0.8);
+            background: rgba(70,0,0,0.9);
+            border-color: #cc0000;
           }
           
           .player-role-icon.sheriff {
+            background: rgba(0,0,139,0.9);
             border-color: #4169e1;
-            background: rgba(65,105,225,0.8);
           }
           
           .player-status {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             color: #ff4444;
-            font-size: 12px;
-            font-style: italic;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
-            margin-top: 3px;
+            font-size: 18px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.9);
+            background: rgba(0,0,0,0.7);
+            padding: 5px 10px;
+            border-radius: 5px;
+            z-index: 5;
           }
           
           /* История событий (верхний левый угол) */
@@ -914,13 +920,14 @@ app.get('/admin', (c) => {
               
               if (response.ok) {
                 alert('Последнее действие отменено');
-                loadCurrentGame();
+                await loadCurrentGame();
               } else {
-                alert('Ошибка при отмене действия');
+                const errorData = await response.json().catch(() => null);
+                alert('Ошибка при отмене действия: ' + (errorData?.error || response.statusText));
               }
             } catch (error) {
               console.error('Error undoing event:', error);
-              alert('Ошибка при отмене действия');
+              alert('Ошибка при отмене действия: ' + error.message);
             }
           }
           
