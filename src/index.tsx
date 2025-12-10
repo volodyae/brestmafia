@@ -307,13 +307,15 @@ app.get('/overlay', (c) => {
           /* Карточки игроков внизу */
           .players-container {
             position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
+            bottom: 10px;
+            left: 0;
+            right: 0;
             display: flex;
-            gap: 15px;
-            width: 95%;
-            justify-content: center;
+            gap: 0;
+            width: 100%;
+            justify-content: space-between;
+            padding: 0 20px;
+            box-sizing: border-box;
           }
           
           .player-card {
