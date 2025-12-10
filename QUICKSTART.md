@@ -8,15 +8,15 @@
 
 | Страница | URL | Назначение |
 |----------|-----|------------|
-| **Overlay для OBS** | https://3000-i4mkk6zad48bbe32nbpw4-cc2fbc16.sandbox.novita.ai/overlay | Добавьте в OBS как Browser Source |
-| **Админ-панель** | https://3000-i4mkk6zad48bbe32nbpw4-cc2fbc16.sandbox.novita.ai/admin | Управление игрой в реальном времени |
-| **Турнирная таблица** | https://3000-i4mkk6zad48bbe32nbpw4-cc2fbc16.sandbox.novita.ai/tournament | Показать между играми |
-| **Профиль игрока** | https://3000-i4mkk6zad48bbe32nbpw4-cc2fbc16.sandbox.novita.ai/player/1 | Статистика игрока (замените 1 на нужный ID) |
+| **Overlay для OBS** | https://3000-i4mkk6zad48bbe32nbpw4-c81df28e.sandbox.novita.ai/overlay | Добавьте в OBS как Browser Source |
+| **Админ-панель** | https://3000-i4mkk6zad48bbe32nbpw4-c81df28e.sandbox.novita.ai/admin | Управление игрой в реальном времени |
+| **Турнирная таблица** | https://3000-i4mkk6zad48bbe32nbpw4-c81df28e.sandbox.novita.ai/tournament | Показать между играми |
+| **Профиль игрока** | https://3000-i4mkk6zad48bbe32nbpw4-c81df28e.sandbox.novita.ai/player/1 | Статистика игрока (замените 1 на нужный ID) |
 
 ## ⚡ 3 шага для начала работы
 
 ### Шаг 1: Откройте админ-панель
-Перейдите по ссылке: https://3000-i4mkk6zad48bbe32nbpw4-cc2fbc16.sandbox.novita.ai/admin
+Перейдите по ссылке: https://3000-i4mkk6zad48bbe32nbpw4-c81df28e.sandbox.novita.ai/admin
 
 ### Шаг 2: Создайте игру
 1. Введите номер игры (например, 1)
@@ -25,7 +25,7 @@
 
 ### Шаг 3: Добавьте overlay в OBS
 1. В OBS: **Источники** → **Добавить** → **Браузер**
-2. URL: `https://3000-i4mkk6zad48bbe32nbpw4-cc2fbc16.sandbox.novita.ai/overlay`
+2. URL: `https://3000-i4mkk6zad48bbe32nbpw4-c81df28e.sandbox.novita.ai/overlay`
 3. Ширина: `1920`, Высота: `1080`
 4. Включите: "Обновлять браузер при активации сцены"
 
